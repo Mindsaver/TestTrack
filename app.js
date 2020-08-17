@@ -3,9 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var tracker = require('pixel-tracker');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+tracker
+    .use(function (error, result) {
+        console.log(result);
+    })
+    .configure({ disable_cookies: true });
+app.all('/pixel', tracker.middleware);
 
 var app = express();
 
